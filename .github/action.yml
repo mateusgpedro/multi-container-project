@@ -1,0 +1,32 @@
+name: Testing
+
+on:
+  push:
+    - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      -name: Test and build
+        run: |
+          docker build -t mateusgpedro/react-test -f ./client/Dockerfile.dev ./client
+          docker run -e CI=true mateusgpedro/docker-react npm test
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      -name: Build project
+        run |
+          docker build -t mateusgpedro/multi-client ./client
+          docker build -t mateusgpedro/multi-nginx ./nginx
+          docker build -t mateusgpedro/multi-server ./server
+          docker build -t mateusgpedro/multi-worker ./worker

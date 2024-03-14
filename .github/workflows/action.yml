@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      -name: Test and build
+      - name: Test and build
         run: |
           docker build -t mateusgpedro/react-test -f ./client/Dockerfile.dev ./client
           docker run -e CI=true mateusgpedro/docker-react npm test
@@ -24,8 +24,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      -name: Build project
-        run |
+      - name: Build project
+        run: |
           docker build -t mateusgpedro/multi-client ./client
           docker build -t mateusgpedro/multi-nginx ./nginx
           docker build -t mateusgpedro/multi-server ./server

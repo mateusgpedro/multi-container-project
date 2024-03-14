@@ -15,7 +15,7 @@ jobs:
 
       - name: Test and build
         run: |
-          docker build -t mateusgpedro/react-test -f ./client/Dockerfile.dev ./client
+          docker build -t mateusgpedro/react-test ./client -f Dockerfile.dev
           docker run -e CI=true mateusgpedro/react-test npm test
 
       - name: Build project

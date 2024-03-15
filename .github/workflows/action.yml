@@ -34,3 +34,18 @@ jobs:
           docker push mateusgpedro/multi-nginx
           docker push mateusgpedro/multi-server
           docker push mateusgpedro/multi-worker
+
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: multi-bucket
+          environment_name: Multi-bucket-env
+          existing_bucket_name: elasticbeanstalk-eu-west-3-637423548813
+          region: eu-west-3
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
